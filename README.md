@@ -1,27 +1,25 @@
 
-# Vitrine 360 Store - High Resilience Setup
+# Vitrine 360 Store - High Resilience
 
-Este projeto foi construído para ser resiliente a falhas comuns de deploy e visualização em branco.
+Este projeto foi configurado com **Vite** para garantir a melhor performance e resiliência no deploy da Vercel, eliminando dependências de CDN instáveis no carregamento inicial.
 
-## Como Rodar Local
-1. `npm install`
-2. `npm run dev`
+## Como Rodar Localmente
+1. Certifique-se de ter o Node.js instalado.
+2. No terminal, execute:
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-## Estrutura
-- `/components`: Elementos visuais modulares.
-- `/sections`: Seções completas da Landing Page.
-- `/types.ts`: Tipagem forte para evitar erros de runtime.
-- `App.tsx`: Gerenciador de rotas com Error Boundary global.
+## Configuração para Deploy na Vercel
+Ao importar o projeto no painel da Vercel, utilize as seguintes configurações:
 
-## Como configurar ENV na Vercel (Opcional para DB)
-Atualmente o projeto utiliza `Local Storage` como persistência de segurança (fallback). Para produção real, configure as envs do **Vercel Postgres** e conecte o banco.
+- **Framework Preset**: `Vite`
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Root Directory**: `./`
 
-## Soluções Anti-Tela Branca
-1. **Error Boundaries**: Se um componente de terceiro falhar, a página continua funcionando.
-2. **Dynamic Imports**: Recursos pesados são carregados após a montagem do DOM.
-3. **No External CDN**: Tailwind e Lucide são servidos diretamente do bundle.
-4. **Hydration Safety**: Todos os estados iniciais são consistentes entre servidor e cliente.
-
-## Admin Default
-- **Email**: admin@vitrine.com
-- **Senha**: admin123
+## Mudanças Técnicas Aplicadas
+- **Remoção de Importmap**: O projeto agora usa módulos npm reais, o que impede a falha de resolução de módulos no navegador.
+- **Vite Bundler**: Todos os arquivos `.tsx` e bibliotecas como `lucide-react` são empacotados em um bundle otimizado.
+- **Loading Fallback**: O `index.html` contém um estilo CSS que exibe uma mensagem de carregamento enquanto o JavaScript não é totalmente processado, evitando a percepção de "tela branca".
